@@ -1,13 +1,13 @@
 package projeto.kotlin.Api.models
 
-import java.time.LocalDateTime
+import projeto.kotlin.Api.DTOs.views.topicoView
 
-data class Res ( // data class para armazenar resultados
-    val id: Long?,
-    val message: String,
-    val date: LocalDateTime = LocalDateTime.now(),
-    val autor: Usuario,
-    val topíco: topico,
-    val resultado: Boolean
+data class Res( // data class para armazenar resultados
+    var id: Long?,
+    val mensagem: String,
+    val usuario: Usuario,
+    var topico: topicoView,
+    val solucao: Boolean
+    )
 
-)
+

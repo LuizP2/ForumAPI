@@ -17,8 +17,7 @@ class UserService(var usuário: List<Usuario>) {
     }
     fun userPorID(id: Long): Usuario { // identifica o usuário pelo id referenciado
         return  usuário.stream().filter({
-                c -> c.iduser == id
+            c -> c.iduser == id
         }).findFirst().get()
     }
-
 }

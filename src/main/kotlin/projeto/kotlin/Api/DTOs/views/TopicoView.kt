@@ -1,9 +1,9 @@
-package projeto.kotlin.Api.DTOs
+package projeto.kotlin.Api.DTOs.views
 
 import projeto.kotlin.Api.models.StatusTopíco
 import java.time.LocalDateTime
 
-class topicoView ( // View que será apresentada no Forum
+data class topicoView ( // View que será apresentada no Forum
     val id: Long?,
     val titulo: String,
     val mensagem: String,
