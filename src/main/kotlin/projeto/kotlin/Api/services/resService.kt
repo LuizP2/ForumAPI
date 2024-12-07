@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import projeto.kotlin.Api.DTOs.forms.attResForm
 import projeto.kotlin.Api.DTOs.forms.resForm
 import projeto.kotlin.Api.DTOs.views.resView
+import projeto.kotlin.Api.exceptions.notFoundException
 import projeto.kotlin.Api.mapper.resFormMapper
 import projeto.kotlin.Api.mapper.resViewMapper
 import projeto.kotlin.Api.models.Res
@@ -14,7 +15,8 @@ class resService(
     private var Res: List<Res>,
     private var resFormMapper: resFormMapper,
     private var resViewMapper: resViewMapper,
-    private var topicoService: topicoService
+    private var topicoService: topicoService,
+    private val notFoundMessage: String = "ID não encontrado"
 ) {
     fun listar(idTopico: Long): List<Res> {
         return Res.stream().filter { r ->
@@ -24,7 +26,7 @@ class resService(
     fun buscarPorID(ID: Long): resView {// Função que filtra os tópicos pelo ID
         val resultado = Res.stream().filter({
                 t -> t.id == ID
-        }).findFirst().get()
+        }).findFirst().orElseThrow{ notFoundException(notFoundMessage)}
 
         return resView( // retorna o topico filtrado
             id = resultado.id,
@@ -47,7 +49,7 @@ class resService(
     fun atualizar(form: attResForm): resView{
         val resultado = Res.stream().filter({// filtra o topico que será atualizado pelo id
                 t -> t.id == form.id
-        }).findFirst().get()
+        }).findFirst().orElseThrow{ notFoundException(notFoundMessage)}
         val resultadoAtualizado = Res(
             id = resultado.id,
             mensagem = resultado.mensagem,
@@ -63,7 +65,7 @@ class resService(
     fun deletar(id: Long) {
         val topico = Res.stream().filter({// filtra o topico que será atualizado pelo id
                 t -> t.id == id
-        }).findFirst().get()
+        }).findFirst().orElseThrow{ notFoundException(notFoundMessage)}
         Res = Res.minus(topico) // Remove o topico da lista
     }
 }

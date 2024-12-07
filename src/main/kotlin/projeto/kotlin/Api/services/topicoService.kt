@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import projeto.kotlin.Api.DTOs.forms.AttTopicoform
 import projeto.kotlin.Api.DTOs.forms.novoTopicoForm
 import projeto.kotlin.Api.DTOs.views.topicoView
+import projeto.kotlin.Api.exceptions.notFoundException
 import projeto.kotlin.Api.mapper.topicoFormMapper
 import projeto.kotlin.Api.mapper.topicoViewMapper
 import projeto.kotlin.Api.models.Topico
@@ -14,7 +15,8 @@ import kotlin.collections.ArrayList
 class topicoService (
     private var Topicos: List<Topico> = ArrayList(),
     private val topicoViewMapper: topicoViewMapper,
-    private val topicoFormMapper: topicoFormMapper
+    private val topicoFormMapper: topicoFormMapper,
+    private val notFoundMessage: String = "ID não encontrado"
     ) {
 
     fun listarTopicos(): List<topicoView> { // Função que lista os topicos existentes
@@ -26,7 +28,7 @@ class topicoService (
     fun buscarPorID(ID: Long): topicoView {// Função que filtra os tópicos pelo ID
         val topico = Topicos.stream().filter({
             t -> t.id == ID
-        }).findFirst().get()
+        }).findFirst().orElseThrow{notFoundException(notFoundMessage)}
 
         return topicoView( // retorna o topico filtrado
             id = topico.id,
@@ -50,7 +52,7 @@ class topicoService (
     fun atualizar(form: AttTopicoform): topicoView {
         val topico = Topicos.stream().filter({// filtra o topico que será atualizado pelo id
                 t -> t.id == form.id
-        }).findFirst().get()
+        }).findFirst().orElseThrow{notFoundException(notFoundMessage)}
 
         val topicoAtualizado = Topico( // remove o topico existente e adiciona o topico atualizado
             id = form.id,
@@ -71,7 +73,7 @@ class topicoService (
     fun deletar(id: Long) {
         val topico = Topicos.stream().filter({// filtra o topico que será atualizado pelo id
             t -> t.id == id
-            }).findFirst().get()
+            }).findFirst().orElseThrow{notFoundException(notFoundMessage)}
         Topicos = Topicos.minus(topico) // Remove o topico da lista
     }
 
