@@ -46,8 +46,8 @@ class exceptionHandler {
         exception: MethodArgumentNotValidException,
         request: HttpServletRequest
     ): ErrorView {
-        val errorMessage = HashMap <String, String?>()
-        exception.bindingResult.fieldError.forEach{
+        val errorMessage = HashMap<String, String?>()
+        exception.bindingResult.fieldErrors.forEach{
             e -> errorMessage.put(e.field, e.defaultMessage)
         }
         return ErrorView(
