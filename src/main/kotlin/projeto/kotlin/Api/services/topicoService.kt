@@ -30,13 +30,7 @@ class topicoService (
             t -> t.id == ID
         }).findFirst().orElseThrow{notFoundException(notFoundMessage)}
 
-        return topicoView( // retorna o topico filtrado
-            id = topico.id,
-            titulo = topico.titulo,
-            mensagem = topico.mensagem,
-            dataCriacao = topico.dataCriacao,
-            status = topico.status
-        )
+        return topicoViewMapper.map(topico)
     }
 
     fun cadastrar(form: novoTopicoForm): topicoView { // Cadastra um novo topico
