@@ -1,9 +1,7 @@
 package projeto.kotlin.Api.repository
 
 import org.springframework.data.jpa.repository.JpaRepository
-import projeto.kotlin.Api.models.Topico
-import projeto.kotlin.Api.models.Usuario
-import projeto.kotlin.Api.models.curso
+import projeto.kotlin.Api.models.usuario
 
-interface usuarioRepository: JpaRepository<Usuario, Long> {
+interface usuarioRepository: JpaRepository<usuario, Long> {
 }

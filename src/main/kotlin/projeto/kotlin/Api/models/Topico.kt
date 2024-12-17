@@ -18,7 +18,7 @@ data class Topico( // data class para o objeto topico
     var mensagem: String,
     val dataCriacao: LocalDateTime = LocalDateTime.now(),
     @ManyToOne val curso: curso,
-    @ManyToOne val autor: Usuario,
+    @ManyToOne val autor: usuario,
     @Enumerated(value = EnumType.STRING) val status: StatusTopíco = StatusTopíco.NAO_RESPONDIDO,
     @OneToMany(mappedBy = "topico") val respostas: List<Res> = ArrayList()
 )
